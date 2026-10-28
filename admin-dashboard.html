@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Dashboard Admin — Wisata Gunung</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+/* ===== css/admin.css ===== */
+/* ============================================================
+   Wisata Gunung - Gaya panel admin
+   ============================================================ */
+:root {
+  --forest: #1f3d2b;
+  --forest-dark: #132a1d;
+  --moss: #4f7a4a;
+  --sun: #f2a33a;
+  --danger: #c0392b;
+  --mist: #f4f6f1;
+  --ink: #1d2420;
+  --muted: #5d6b62;
+  --line: #e0e6e1;
+  --radius: 12px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Inter", system-ui, sans-serif; background: var(--mist); color: var(--ink); line-height: 1.5; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+
+/* ---------- Login ---------- */
+.login-page { min-height: 100vh; display: grid; place-items: center; padding: 20px; background: linear-gradient(135deg, var(--forest-dark), var(--moss)); }
+.login-card { background: #fff; width: min(400px, 100%); border-radius: 18px; padding: 36px 30px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); }
+.login-card h1 { color: var(--forest); font-size: 1.5rem; margin-bottom: 4px; }
+.login-card p.sub { color: var(--muted); margin-bottom: 22px; font-size: 0.92rem; }
+.back-link { display: inline-block; margin-top: 16px; color: var(--muted); font-size: 0.88rem; }
+
+/* ---------- Layout dashboard ---------- */
+.layout { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+.sidebar { background: var(--forest-dark); color: #fff; padding: 22px 14px; position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; }
+.sidebar .brand { font-weight: 700; font-size: 1.1rem; padding: 0 10px 20px; }
+.sidebar .brand span { color: var(--sun); }
+.sidebar nav { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.tab-btn { background: none; border: 0; color: rgba(255, 255, 255, 0.78); text-align: left; padding: 11px 14px; border-radius: 10px; }
+.tab-btn:hover { background: rgba(255, 255, 255, 0.08); }
+.tab-btn.active { background: var(--moss); color: #fff; font-weight: 600; }
+.user-box { font-size: 0.8rem; opacity: 0.75; padding: 10px; word-break: break-all; }
+.main { padding: 28px; max-width: 1100px; width: 100%; }
+.topbar-mobile { display: none; }
+.panel { display: none; }
+.panel.active { display: block; }
+.panel-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; gap: 10px; flex-wrap: wrap; }
+.panel-head h2 { color: var(--forest); }
+
+/* ---------- Komponen ---------- */
+.card { background: #fff; border-radius: var(--radius); padding: 20px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); margin-bottom: 18px; }
+.btn { border: 0; border-radius: 10px; padding: 10px 18px; font-weight: 600; background: var(--moss); color: #fff; }
+.btn:hover { filter: brightness(1.08); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-sm { padding: 6px 12px; font-size: 0.82rem; }
+.btn-danger { background: var(--danger); }
+.btn-light { background: #e9eee9; color: var(--ink); }
+.btn-block { width: 100%; }
+
+.form-group { margin-bottom: 14px; }
+.form-group label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 5px; }
+.form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 10px; font: inherit; background: #fff; }
+.form-group input:focus, .form-group textarea:focus { outline: 0; border-color: var(--moss); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.hint { color: var(--muted); font-size: 0.8rem; margin-top: 3px; }
+
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+th, td { text-align: left; padding: 11px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+th { color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.thumb { width: 54px; height: 40px; border-radius: 6px; object-fit: cover; background: var(--line); }
+.actions { display: flex; gap: 6px; }
+.table-wrap { overflow-x: auto; }
+
+.alert { padding: 10px 14px; border-radius: 10px; margin-bottom: 14px; font-size: 0.9rem; }
+.alert.error { background: #fdecea; color: #8a1f14; }
+.alert.ok { background: #e6f4ea; color: #1e6b34; }
+.alert.warn { background: #fff4e0; color: #7a4a00; }
+
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; margin-bottom: 20px; }
+.stat { background: #fff; border-radius: var(--radius); padding: 16px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); }
+.stat b { display: block; font-size: 1.7rem; color: var(--forest); }
+.stat span { color: var(--muted); font-size: 0.82rem; }
+
+/* ---------- Modal ---------- */
+.modal { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.55); display: none; place-items: center; padding: 18px; z-index: 50; }
+.modal.open { display: grid; }
+.modal-box { background: #fff; border-radius: 16px; padding: 26px; width: min(500px, 100%); max-height: 92vh; overflow-y: auto; }
+.modal-box h3 { margin-bottom: 16px; color: var(--forest); }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+
+@media (max-width: 800px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position: fixed; z-index: 40; left: 0; top: 0; width: 240px; transform: translateX(-100%); transition: transform 0.25s; }
+  .sidebar.open { transform: none; }
+  .topbar-mobile { display: flex; align-items: center; justify-content: space-between; background: var(--forest-dark); color: #fff; padding: 12px 16px; position: sticky; top: 0; z-index: 30; }
+  .topbar-mobile button { background: none; border: 0; color: #fff; font-size: 1.5rem; }
+  .main { padding: 18px 14px; }
+  .form-row { grid-template-columns: 1fr; }
+}
+  </style>
+</head>
+<body>
+  <div class="topbar-mobile">
+    <strong>⛰️ Admin</strong>
+    <button id="menuBtn" aria-label="Menu">☰</button>
+  </div>
+
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">⛰️ Wisata<span>Gunung</span></div>
+      <nav>
+        <button class="tab-btn active" data-tab="overview">📊 Ringkasan</button>
+        <button class="tab-btn" data-tab="packages">🎒 Paket Wisata</button>
+        <button class="tab-btn" data-tab="gallery">🖼️ Galeri</button>
+        <button class="tab-btn" data-tab="team">👥 Struktur Organisasi</button>
+        <button class="tab-btn" data-tab="settings">⚙️ Info Wisata</button>
+        <button class="tab-btn" data-tab="bookings">📒 Log Booking</button>
+      </nav>
+      <div class="user-box" id="userEmail"></div>
+      <a class="tab-btn" href="index.html" target="_blank" rel="noopener">🌐 Lihat Website</a>
+      <button class="tab-btn" id="logoutBtn">🚪 Keluar</button>
+    </aside>
+
+    <main class="main">
+      <div id="globalAlert"></div>
+
+      <!-- Ringkasan -->
+      <section class="panel active" id="panel-overview">
+        <div class="panel-head"><h2>Ringkasan</h2></div>
+        <div class="stats">
+          <div class="stat"><b id="statPackages">0</b><span>Paket</span></div>
+          <div class="stat"><b id="statGallery">0</b><span>Item Galeri</span></div>
+          <div class="stat"><b id="statTeam">0</b><span>Anggota Tim</span></div>
+          <div class="stat"><b id="statBookings">0</b><span>Klik Booking</span></div>
+        </div>
+        <div class="card">
+          <p>Perubahan yang Anda simpan langsung tampil di website pengunjung secara real-time.</p>
+        </div>
+      </section>
+
+      <!-- Paket -->
+      <section class="panel" id="panel-packages">
+        <div class="panel-head"><h2>Paket Wisata</h2><button class="btn" data-add="packages">+ Tambah Paket</button></div>
+        <div class="card table-wrap"><table><thead><tr><th>Foto</th><th>Judul</th><th>Harga</th><th>Deskripsi</th><th></th></tr></thead><tbody id="tbody-packages"></tbody></table></div>
+      </section>
+
+      <!-- Galeri -->
+      <section class="panel" id="panel-gallery">
+        <div class="panel-head"><h2>Galeri</h2><button class="btn" data-add="gallery">+ Tambah Foto/Video</button></div>
+        <div class="card table-wrap"><table><thead><tr><th>Media</th><th>Keterangan</th><th>Kategori</th><th></th></tr></thead><tbody id="tbody-gallery"></tbody></table></div>
+      </section>
+
+      <!-- Tim -->
+      <section class="panel" id="panel-team">
+        <div class="panel-head"><h2>Struktur Organisasi</h2><button class="btn" data-add="team">+ Tambah Anggota</button></div>
+        <div class="card table-wrap"><table><thead><tr><th>Foto</th><th>Nama</th><th>Jabatan</th><th></th></tr></thead><tbody id="tbody-team"></tbody></table></div>
+      </section>
+
+      <!-- Info wisata -->
+      <section class="panel" id="panel-settings">
+        <div class="panel-head"><h2>Informasi Wisata</h2></div>
+        <form class="card" id="settingsForm">
+          <div class="form-group">
+            <label for="s_whatsapp_number">Nomor WhatsApp tujuan booking</label>
+            <input id="s_whatsapp_number" inputmode="numeric" placeholder="6281234567890" required />
+            <div class="hint">Format internasional tanpa + atau spasi, contoh 6281234567890.</div>
+          </div>
+          <div class="form-group"><label for="s_vision">Visi</label><textarea id="s_vision" rows="3"></textarea></div>
+          <div class="form-group">
+            <label for="s_mission">Misi</label><textarea id="s_mission" rows="5"></textarea>
+            <div class="hint">Satu poin misi per baris.</div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label for="s_address">Alamat</label><input id="s_address" /></div>
+            <div class="form-group"><label for="s_phone">Telepon</label><input id="s_phone" /></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label for="s_email">Email</label><input id="s_email" type="email" /></div>
+            <div class="form-group"><label for="s_instagram">Link Instagram</label><input id="s_instagram" type="url" /></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label for="s_facebook">Link Facebook</label><input id="s_facebook" type="url" /></div>
+            <div class="form-group">
+              <label for="s_maps_embed">URL Embed Google Maps</label><input id="s_maps_embed" type="url" />
+              <div class="hint">Google Maps → Bagikan → Sematkan peta → salin isi atribut src.</div>
+            </div>
+          </div>
+          <button class="btn" type="submit">Simpan Perubahan</button>
+        </form>
+      </section>
+
+      <!-- Log booking -->
+      <section class="panel" id="panel-bookings">
+        <div class="panel-head"><h2>Log Riwayat Booking</h2><button class="btn btn-light" id="refreshBookings">↻ Muat Ulang</button></div>
+        <div class="card table-wrap"><table><thead><tr><th>Waktu Klik</th><th>Nama</th><th>Paket</th><th>Tanggal</th><th>Orang</th><th></th></tr></thead><tbody id="tbody-bookings"></tbody></table></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal CRUD generik -->
+  <div class="modal" id="crudModal" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <h3 id="crudTitle"></h3>
+      <div id="crudAlert"></div>
+      <form id="crudForm">
+        <div id="crudFields"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-light" id="crudCancel">Batal</button>
+          <button type="submit" class="btn" id="crudSave">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wisata Gunung — Petualangan Menuju Puncak</title>
+  <meta name="description" content="Paket camping, open trip summit, rental alat, dan tour guide untuk pendakian gunung. Booking cepat via WhatsApp." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+  <style>
+/* ===== css/style.css ===== */
+/* ============================================================
+   Wisata Gunung - Gaya utama
+   ============================================================ */
+:root {
+  --forest: #1f3d2b;
+  --forest-dark: #132a1d;
+  --moss: #4f7a4a;
+  --sun: #f2a33a;
+  --sun-dark: #d98a1f;
+  --mist: #f4f6f1;
+  --ink: #1d2420;
+  --muted: #5d6b62;
+  --white: #ffffff;
+  --radius: 16px;
+  --shadow: 0 10px 30px rgba(19, 42, 29, 0.12);
+  --font-head: "Poppins", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--white);
+  line-height: 1.65;
+}
+img, video, iframe { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+.container { width: min(1140px, 92%); margin-inline: auto; }
+.section { padding: 90px 0; }
+.section.alt { background: var(--mist); }
+.section-head { text-align: center; max-width: 640px; margin: 0 auto 50px; }
+.section-head .eyebrow {
+  color: var(--moss);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+.section-head h2 {
+  font-family: var(--font-head);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  color: var(--forest);
+  margin: 6px 0 12px;
+}
+.section-head p { color: var(--muted); }
+
+/* ---------- Tombol ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 999px;
+  border: 0;
+  font: 600 0.95rem var(--font-body);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: var(--sun); color: var(--forest-dark); box-shadow: 0 8px 20px rgba(242, 163, 58, 0.4); }
+.btn-primary:hover { background: var(--sun-dark); }
+.btn-wa { background: #25d366; color: #fff; }
+.btn-wa:hover { background: #1fb457; }
+.btn-ghost { background: transparent; color: #fff; border: 2px solid rgba(255, 255, 255, 0.7); }
+.btn-ghost:hover { background: rgba(255, 255, 255, 0.15); }
+.btn-block { width: 100%; justify-content: center; }
+
+/* ---------- Header ---------- */
+.header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.header.scrolled { background: rgba(19, 42, 29, 0.96); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); backdrop-filter: blur(8px); }
+.nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+.logo { font-family: var(--font-head); font-weight: 700; font-size: 1.3rem; color: #fff; display: flex; align-items: center; gap: 8px; }
+.logo span { color: var(--sun); }
+.nav-links { display: flex; align-items: center; gap: 26px; }
+.nav-links a { color: rgba(255, 255, 255, 0.9); font-weight: 500; font-size: 0.93rem; transition: color 0.2s; }
+.nav-links a:hover { color: var(--sun); }
+.nav-toggle { display: none; background: none; border: 0; color: #fff; font-size: 1.7rem; cursor: pointer; }
+.admin-link { opacity: 0.35; font-size: 1rem; transition: opacity 0.2s; }
+.admin-link:hover { opacity: 1; }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: #fff;
+  overflow: hidden;
+  background: var(--forest-dark) url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600") center/cover;
+}
+.hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 25, 16, 0.55), rgba(10, 25, 16, 0.75)); z-index: 1; }
+.hero-content { position: relative; z-index: 2; max-width: 780px; padding: 0 20px; }
+.hero-badge { display: inline-block; padding: 6px 16px; border-radius: 999px; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); font-size: 0.85rem; margin-bottom: 20px; }
+.hero h1 { font-family: var(--font-head); font-size: clamp(2.2rem, 6vw, 4rem); line-height: 1.15; margin-bottom: 16px; }
+.hero h1 em { color: var(--sun); font-style: normal; }
+.hero p { font-size: 1.1rem; opacity: 0.92; margin-bottom: 30px; }
+.hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.scroll-hint { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 2; color: #fff; opacity: 0.7; animation: bounce 1.8s infinite; }
+@keyframes bounce { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 10px); } }
+
+/* ---------- Visi Misi ---------- */
+.vm-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.vm-card { background: #fff; border-radius: var(--radius); padding: 34px; box-shadow: var(--shadow); border-top: 4px solid var(--moss); }
+.vm-card h3 { font-family: var(--font-head); color: var(--forest); margin-bottom: 14px; font-size: 1.3rem; }
+.vm-card ul li { position: relative; padding-left: 26px; margin-bottom: 10px; }
+.vm-card ul li::before { content: "▲"; position: absolute; left: 0; color: var(--sun); font-size: 0.7rem; top: 6px; }
+
+/* ---------- Paket ---------- */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 26px; }
+.pkg-card { background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; transition: transform 0.3s; }
+.pkg-card:hover { transform: translateY(-6px); }
+.pkg-img { height: 190px; background: var(--moss) center/cover; }
+.pkg-body { padding: 22px; display: flex; flex-direction: column; flex: 1; }
+.pkg-body h3 { font-family: var(--font-head); font-size: 1.1rem; color: var(--forest); margin-bottom: 8px; }
+.pkg-body p { color: var(--muted); font-size: 0.92rem; flex: 1; margin-bottom: 16px; }
+.pkg-price { font-family: var(--font-head); font-weight: 700; font-size: 1.3rem; color: var(--sun-dark); margin-bottom: 14px; }
+.pkg-price small { font-weight: 400; color: var(--muted); font-size: 0.8rem; }
+
+/* ---------- Tim ---------- */
+.team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 26px; }
+.team-card { text-align: center; background: #fff; border-radius: var(--radius); padding: 28px 18px; box-shadow: var(--shadow); }
+.avatar { width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 14px; background: var(--moss) center/cover; display: grid; place-items: center; color: #fff; font: 700 2rem var(--font-head); border: 4px solid var(--mist); }
+.team-card h3 { font-family: var(--font-head); font-size: 1.05rem; color: var(--forest); }
+.team-card span { color: var(--muted); font-size: 0.9rem; }
+
+/* ---------- Galeri ---------- */
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+.gallery-item { position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; cursor: zoom-in; background: var(--mist); }
+.gallery-item img, .gallery-item video { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+.gallery-item:hover img, .gallery-item:hover video { transform: scale(1.12); }
+.gallery-item .cap { position: absolute; inset: auto 0 0 0; padding: 30px 14px 12px; color: #fff; font-size: 0.88rem; background: linear-gradient(transparent, rgba(0, 0, 0, 0.7)); opacity: 0; transition: opacity 0.3s; }
+.gallery-item:hover .cap { opacity: 1; }
+.lightbox { position: fixed; inset: 0; z-index: 300; background: rgba(0, 0, 0, 0.9); display: none; place-items: center; padding: 20px; }
+.lightbox.open { display: grid; }
+.lightbox img, .lightbox video { max-height: 85vh; border-radius: 8px; }
+.lightbox .close { position: absolute; top: 18px; right: 24px; color: #fff; font-size: 2.2rem; background: none; border: 0; cursor: pointer; }
+.lightbox .lb-cap { color: #fff; text-align: center; margin-top: 12px; }
+
+/* ---------- Peta ---------- */
+.map-wrap { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+.map-wrap iframe { width: 100%; height: 420px; border: 0; }
+
+/* ---------- Kontak ---------- */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.contact-info li { display: flex; gap: 14px; margin-bottom: 18px; }
+.contact-info .ic { width: 42px; height: 42px; border-radius: 50%; background: var(--moss); color: #fff; display: grid; place-items: center; flex-shrink: 0; }
+.form-group { margin-bottom: 14px; }
+.form-group label { display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 5px; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 14px; border: 1.5px solid #d6ddd7; border-radius: 10px; font: inherit; background: #fff; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: 0; border-color: var(--moss); box-shadow: 0 0 0 3px rgba(79, 122, 74, 0.2); }
+
+/* ---------- Modal ---------- */
+.modal { position: fixed; inset: 0; z-index: 250; background: rgba(0, 0, 0, 0.6); display: none; place-items: center; padding: 20px; }
+.modal.open { display: grid; }
+.modal-box { background: #fff; border-radius: var(--radius); padding: 30px; width: min(440px, 100%); position: relative; animation: pop 0.25s; }
+.modal-box h3 { font-family: var(--font-head); color: var(--forest); margin-bottom: 18px; }
+.modal-close { position: absolute; top: 12px; right: 16px; background: none; border: 0; font-size: 1.6rem; cursor: pointer; color: var(--muted); }
+@keyframes pop { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+/* ---------- Footer ---------- */
+.footer { background: var(--forest-dark); color: rgba(255, 255, 255, 0.8); padding: 40px 0 26px; text-align: center; }
+.footer .social { display: flex; gap: 16px; justify-content: center; margin: 14px 0; }
+.footer .social a:hover { color: var(--sun); }
+.footer small { opacity: 0.6; }
+
+.empty { text-align: center; color: var(--muted); grid-column: 1 / -1; padding: 30px; }
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--forest); color: #fff; padding: 12px 22px; border-radius: 999px; z-index: 400; box-shadow: var(--shadow); }
+
+/* ===== css/responsive.css ===== */
+/* ============================================================
+   Wisata Gunung - Optimasi mobile & tablet
+   ============================================================ */
+@media (max-width: 900px) {
+  .vm-grid, .contact-grid { grid-template-columns: 1fr; }
+  .section { padding: 64px 0; }
+}
+
+@media (max-width: 820px) {
+  .nav-toggle { display: block; }
+  .nav-links {
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    background: rgba(19, 42, 29, 0.98);
+    padding: 8px 5% 18px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: max-height 0.3s, opacity 0.3s;
+  }
+  .nav-links.open { max-height: 480px; opacity: 1; pointer-events: auto; }
+  .nav-links a { padding: 12px 0; width: 100%; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+}
+
+@media (max-width: 520px) {
+  .hero-actions .btn { width: 100%; justify-content: center; }
+  .map-wrap iframe { height: 320px; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .modal-box { padding: 24px 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+  </style>
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="header" id="header">
+    <div class="container nav">
+      <a href="#home" class="logo">⛰️ Wisata<span>Gunung</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Buka menu">☰</button>
+      <nav class="nav-links" id="navLinks">
+        <a href="#home">Home</a>
+        <a href="#paket">Produk/Paket</a>
+        <a href="#visi-misi">Visi Misi</a>
+        <a href="#organisasi">Struktur Organisasi</a>
+        <a href="#galeri">Galeri</a>
+        <a href="#peta">Peta</a>
+        <a href="#kontak">Kontak</a>
+        <a href="admin-login.html" class="admin-link" title="Admin" aria-label="Login admin">🔒</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero" id="home">
+    <!-- Letakkan video di assets/video/hero.mp4 (disarankan < 8 MB, 1080p) -->
+    <video autoplay muted loop playsinline preload="metadata"
+           poster="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600">
+      <source src="assets/video/hero.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-content" data-aos="fade-up">
+      <span class="hero-badge">🌄 Pendakian aman &amp; ramah lingkungan</span>
+      <h1>Taklukkan Puncak, <em>Temukan Dirimu</em></h1>
+      <p>Paket camping, open trip, rental alat, dan guide berpengalaman — semua bisa dipesan langsung lewat WhatsApp.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" data-book>Booking Sekarang</button>
+        <a href="#paket" class="btn btn-ghost">Lihat Paket</a>
+      </div>
+    </div>
+    <div class="scroll-hint">⌄</div>
+  </section>
+
+  <!-- ===== Paket ===== -->
+  <section class="section" id="paket">
+    <div class="container">
+      <div class="section-head" data-aos="fade-up">
+        <div class="eyebrow">Produk &amp; Paket</div>
+        <h2>Pilih Petualanganmu</h2>
+        <p>Harga transparan, fasilitas jelas, dan siap berangkat.</p>
+      </div>
+      <div class="card-grid" id="packageList"><p class="empty">Memuat paket…</p></div>
+    </div>
+  </section>
+
+  <!-- ===== Visi Misi ===== -->
+  <section class="section alt" id="visi-misi">
+    <div class="container">
+      <div class="section-head" data-aos="fade-up">
+        <div class="eyebrow">Tentang Kami</div>
+        <h2>Visi &amp; Misi</h2>
+      </div>
+      <div class="vm-grid">
+        <article class="vm-card" data-aos="fade-right">
+          <h3>🎯 Visi</h3>
+          <p id="visionText">Memuat…</p>
+        </article>
+        <article class="vm-card" data-aos="fade-left">
+          <h3>🧭 Misi</h3>
+          <ul id="missionList"></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Struktur Organisasi ===== -->
+  <section class="section" id="organisasi">
+    <div class="container">
+      <div class="section-head" data-aos="fade-up">
+        <div class="eyebrow">Tim Kami</div>
+        <h2>Struktur Organisasi</h2>
+      </div>
+      <div class="team-grid" id="teamList"><p class="empty">Memuat tim…</p></div>
+    </div>
+  </section>
+
+  <!-- ===== Galeri ===== -->
+  <section class="section alt" id="galeri">
+    <div class="container">
+      <div class="section-head" data-aos="fade-up">
+        <div class="eyebrow">Galeri</div>
+        <h2>Momen di Ketinggian</h2>
+      </div>
+      <div class="gallery-grid" id="galleryList"><p class="empty">Memuat galeri…</p></div>
+    </div>
+  </section>
+
+  <!-- ===== Peta ===== -->
+  <section class="section" id="peta">
+    <div class="container">
+      <div class="section-head" data-aos="fade-up">
+        <div class="eyebrow">Lokasi</div>
+        <h2>Temukan Kami</h2>
+      </div>
+      <div class="map-wrap" data-aos="zoom-in">
+        <iframe id="mapFrame" title="Peta lokasi wisata gunung" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                src="https://www.google.com/maps?q=Gunung+Tangkuban+Perahu&output=embed"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Kontak ===== -->
+  <section class="section alt" id="kontak">
+    <div class="container">
+      <div class="section-head" data-aos="fade-up">
+        <div class="eyebrow">Kontak</div>
+        <h2>Hubungi Kami</h2>
+      </div>
+      <div class="contact-grid">
+        <ul class="contact-info" data-aos="fade-right">
+          <li><span class="ic">📍</span><div><strong>Alamat</strong><br /><span id="contactAddress">—</span></div></li>
+          <li><span class="ic">📞</span><div><strong>Telepon</strong><br /><span id="contactPhone">—</span></div></li>
+          <li><span class="ic">✉️</span><div><strong>Email</strong><br /><span id="contactEmail">—</span></div></li>
+        </ul>
+        <form id="contactForm" data-aos="fade-left">
+          <div class="form-group"><label for="cName">Nama</label><input id="cName" required maxlength="80" /></div>
+          <div class="form-group"><label for="cMsg">Pesan</label><textarea id="cMsg" rows="4" required maxlength="500"></textarea></div>
+          <button class="btn btn-wa btn-block" type="submit">Kirim via WhatsApp</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="container">
+      <strong>⛰️ WisataGunung</strong>
+      <div class="social">
+        <a id="igLink" href="#" target="_blank" rel="noopener">Instagram</a>
+        <a id="fbLink" href="#" target="_blank" rel="noopener">Facebook</a>
+        <a href="admin-login.html" class="admin-link" style="color:#fff" aria-label="Login admin">🔒</a>
+      </div>
+      <small>© <span id="year"></span> Wisata Gunung. Semua hak dilindungi.</small>
+    </div>
+  </footer>
+
+  <!-- ===== Modal Booking ===== -->
+  <div class="modal" id="bookingModal" role="dialog" aria-modal="true" aria-labelledby="bookingTitle">
+    <div class="modal-box">
+      <button class="modal-close" id="bookingClose" aria-label="Tutup">×</button>
+      <h3 id="bookingTitle">Pesan via WhatsApp</h3>
+      <form id="bookingForm">
+        <div class="form-group"><label for="bName">Nama</label><input id="bName" required maxlength="80" /></div>
+        <div class="form-group"><label for="bPackage">Paket</label><select id="bPackage" required></select></div>
+        <div class="form-group"><label for="bDate">Tanggal</label><input id="bDate" type="date" required /></div>
+        <div class="form-group"><label for="bPeople">Jumlah Orang</label><input id="bPeople" type="number" min="1" max="100" value="1" required /></div>
+        <button class="btn btn-wa btn-block" type="submit">Lanjut ke WhatsApp</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== Lightbox ===== -->
+  <div class="lightbox" id="lightbox">
+    <button class="close" id="lbClose" aria-label="Tutup">×</button>
+    <div><div id="lbContent"></div><div class="lb-cap" id="lbCap"></div></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/whatsapp.js"></script>
+</body>
+</html>
